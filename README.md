@@ -6,9 +6,12 @@
 
 ## 使い方
 
+- 事前に上記の音声作品を購入し、分割ファイルをダウンロードして解凍しておく
+- 下記の方法で起動した画面で作品フォルダを指定
+
 ### 実行ファイルから
 
-[Releases](https://github.com/eggplants/random-nipple-player/releases)から対応するOS(Windows, Macos, Linux)のファイルをダウンロード
+[Releases](https://github.com/eggplants/random-nipple-player/releases)から対応するOS(Windows, Macos, Linux)のファイルをダウンロード, 解凍し実行
 
 ### PyPIから
 
