@@ -1,0 +1,154 @@
+name: Build
+on:
+  push:
+    tags:
+      - "v*"
+env:
+  PYTHON_VERSION: 3.9
+
+jobs:
+  windows-build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@master
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@master
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Upgrade pip
+        run: |
+          python -m pip install -U pip
+          python -m pip install -r requirements.txt
+
+      - name: build
+        run: pyinstaller -F randomnipple/random-nipple-player.py -i img/icon.ico --version-file file_version_info.txt
+
+      - name: upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: random-nipple-player-windows
+          path: dist/random-nipple-player.exe
+
+  macOS-build:
+    runs-on: macOS-latest
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@master
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@master
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Upgrade pip
+        run: |
+          python -m pip install -U pip PyInstaller
+          python -m pip install -r requirements.txt
+
+      - name: build
+        run: pyinstaller -F randomnipple/random-nipple-player.py -i img/icon.ico
+
+      - name: upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: random-nipple-player-macos
+          path: dist/random-nipple-player
+
+  ubuntu-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout commit
+        uses: actions/checkout@master
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@master
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Upgrade pip
+        run: |
+          python -m pip install -U pip PyInstaller
+          python -m pip install -r requirements.txt
+
+      - name: build
+        run: pyinstaller -F randomnipple/random-nipple-player.py -i img/icon.ico
+
+      - name: upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: random-nipple-player-linux
+          path: dist/random-nipple-player
+
+  release:
+    needs: [ubuntu-build, macOS-build, windows-build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Linux
+        uses: actions/download-artifact@v1
+        with:
+          name: random-nipple-player-linux
+
+      - name: Download Mac
+        uses: actions/download-artifact@v1
+        with:
+          name: random-nipple-player-macos
+
+      - name: Download Windows
+        uses: actions/download-artifact@v1
+        with:
+          name: random-nipple-player-windows
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Zip
+        run: |
+          tar -C random-nipple-player-macos -pczvf random-nipple-player-macos.tar.gz random-nipple-player
+          tar -C random-nipple-player-linux -pczvf random-nipple-player-linux.tar.gz random-nipple-player
+          zip -9 --junk-paths random-nipple-player-windows ./random-nipple-player-windows/random-nipple-player.exe
+
+      - name: Set env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> "$GITHUB_ENV"
+
+      - name: Append mac Binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./random-nipple-player-macos.tar.gz
+          asset_name: random-nipple-player-macos_${{ env.RELEASE_VERSION }}.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Append linux Binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./random-nipple-player-linux.tar.gz
+          asset_name: random-nipple-player-linux_${{ env.RELEASE_VERSION }}.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Append win Binary
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./random-nipple-player-windows.zip
+          asset_name: random-nipple-player-windows_${{ env.RELEASE_VERSION }}.zip
+          asset_content_type: application/zip
