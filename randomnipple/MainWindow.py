@@ -11,7 +11,8 @@ class MainWindow:
     def __init__(self) -> None:
         self.layout = self.__layout()
 
-        self.window = sg.Window('Random Nipple Player', self.layout)
+        self.window = sg.Window('Random Nipple Player',
+                                self.layout, keep_on_top=True)
 
     def __layout(self):
         select_folder = [
@@ -33,13 +34,12 @@ class MainWindow:
         finish = [[sg.Radio('ウェット', key='wet', group_id='finish', default=True),
                    sg.Radio('ドライ', key='dry', group_id='finish')]]
 
-        spin = [[sg.Spin([i for i in range(1, 100)],
+        spin = [[sg.Spin([_ for _ in range(1, 100)],
                          initial_value=1, key='repeat', size=(5, 1)), sg.Text('回')]]
 
         return [[sg.Frame('フォルダ選択', select_folder)],
-                [sg.Frame('ボイス', actor)],
-                [sg.Frame('方向', ear), sg.Frame('挨拶', first),
-                 sg.Frame('ランダムセリフ', serif)],
+                [sg.Frame('方向', ear), sg.Frame('挨拶', first)],
+                [sg.Frame('ボイス', actor), sg.Frame('ランダムセリフ', serif)],
                 [sg.Frame('フィニッシュ', finish),
                  sg.Frame('同一トラックリピート回数(ランダムセリフ無し時)', spin)],
                 [sg.Button('Play!', key='play', button_color='green'),
@@ -65,17 +65,18 @@ class MainWindow:
             self.__toggle_button(True)
             if not VoiceDirectoryChecker.check(vals['dir']):
                 sg.PopupError('指定したフォルダは有効ではありません。\n'
-                              '指定したフォルダ: ' + vals['dir'])
+                              '指定したフォルダ: ' + vals['dir'], keep_on_top=True)
                 return True
             r = RandomPlayer(vals)
             r.play()
             rtn = sg.popup('再生中: 焦らしパート', title='再生中...',
-                           custom_text=('Finish!', 'Cancel'))
+                           custom_text=('Finish!', 'Cancel'),
+                           keep_on_top=True)
             if rtn == 'Finish!':
                 r.stop()
                 r.play_final()
                 rtn = sg.popup('再生中: フィニッシュパート', title='再生中...',
-                               custom_text='Cancel')
+                               custom_text='Cancel', keep_on_top=True)
             r.stop()
             return True
         else:
