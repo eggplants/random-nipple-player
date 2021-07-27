@@ -2,7 +2,7 @@ from glob import glob
 from multiprocessing import Process
 from os import path
 from random import randint
-from typing import Optional
+from typing import List, Optional
 
 import simpleaudio as sa
 
@@ -11,12 +11,13 @@ from randomnipple.NippleOptionDict import NippleOptionDict
 
 class RandomPlayer:
     def __init__(self, vals: NippleOptionDict) -> None:
+        def get_one(options: List[str]) -> str:
+            return [i for i in options if self.vals[i]][0]  # type: ignore
         self.vals = vals
-        self.ear = [i for i in ('left', 'right',) if vals[i]][0]
-        self.actor = [i for i in ('loli', 'boyish', 'low',) if vals[i]][0]
-        self.serif = [i for i in (
-            'serif_enable', 'serif_disable',) if vals[i]][0]
-        self.finish = [i for i in ('wet', 'dry',) if vals[i]][0]
+        self.ear = get_one(['left', 'right'])
+        self.actor = get_one(['loli', 'boyish', 'low'])
+        self.serif = get_one(['serif_enable', 'serif_disable'])
+        self.finish = get_one(['wet', 'dry'])
         self.dir = self.__set_dir()
         self.thread = Process(target=self.__play)
         self.play_obj: Optional[sa.shiny.PlayObject] = None
@@ -40,7 +41,7 @@ class RandomPlayer:
 
         loop_tracks = (sorted(glob(path.join(self.dir, 'ループ音声', '*.wav')))[1:]
                        if self.serif == 'serif_enable'
-                       else glob(path.join(self.dir, 'ループ音声', '*.wav')))
+                       else glob(path.join(self.dir, 'オノマトペオンリー', '*.wav')))
         loop_tracks_len = len(loop_tracks)
         while True:
             rand_int = randint(0, loop_tracks_len-1)
