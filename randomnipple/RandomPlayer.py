@@ -37,6 +37,7 @@ class RandomPlayer:
         self.thread.start()
 
     def __play(self) -> None:
+        self.__play_first()
         if self.serif == 'serif_enable':
             loop_tracks = sorted(
                 glob(path.join(self.dir, 'ループ音声', '*.wav')))[1:-4]

@@ -42,7 +42,8 @@ class MainWindow:
                  sg.Frame('ランダムセリフ', serif)],
                 [sg.Frame('フィニッシュ', finish),
                  sg.Frame('同一トラックリピート回数(ランダムセリフなし時)', spin)],
-                [sg.Button('Play!', key='play'), sg.Button('Close', key='close')]]
+                [sg.Button('Play!', key='play', button_color='green'),
+                 sg.Button('Close', key='close', button_color='red')]]
 
     def launch(self) -> None:
         signal = True
@@ -68,11 +69,13 @@ class MainWindow:
                 return True
             r = RandomPlayer(vals)
             r.play()
-            rtn = sg.popup(custom_text=('Finish!', 'Cancel'))
+            rtn = sg.popup('再生中: 焦らしパート', title='再生中...',
+                           custom_text=('Finish!', 'Cancel'))
             if rtn == 'Finish!':
                 r.stop()
                 r.play_final()
-                rtn = sg.popup(custom_text='Cancel')
+                rtn = sg.popup('再生中: フィニッシュパート', title='再生中...',
+                               custom_text='Cancel')
             r.stop()
             return True
         else:
