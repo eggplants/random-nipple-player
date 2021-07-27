@@ -1,6 +1,6 @@
 # Random Nipple Player
 
-[![PyPI version](https://badge.fury.io/py/random-nipple-player.svg)](https://badge.fury.io/py/random-nipple-player)
+[![PyPI version](https://badge.fury.io/py/random-nipple-player.svg)](https://badge.fury.io/py/random-nipple-player) [![GitHub release](https://img.shields.io/github/v/release/eggplants/random-nipple-player)](https://github.com/eggplants/random-nipple-player/releases)
 
 音声作品「[乳首オナ指示でカリカリタイム](https://www.dlsite.com/maniax/work/=/product_id/RJ323807.html)」(RJ323807)用のプレイヤー
 
