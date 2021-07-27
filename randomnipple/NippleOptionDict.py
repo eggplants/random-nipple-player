@@ -2,13 +2,16 @@ from typing import TypedDict
 
 
 class NippleOptionDict(TypedDict):
-    left: bool
-    right: bool
-    loli: bool
     boyish: bool
-    low: bool
-    wet: bool
-    dry: bool
     dir: str
-    serif_enable: bool
+    dry: bool
+    first_disable: bool
+    first_enable: bool
+    left: bool
+    loli: bool
+    low: bool
+    repeat: int
+    right: bool
     serif_disable: bool
+    serif_enable: bool
+    wet: bool

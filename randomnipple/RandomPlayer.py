@@ -1,7 +1,7 @@
 from glob import glob
 from multiprocessing import Process
 from os import path
-from random import randint
+from random import randint, sample, shuffle
 from typing import List, Optional
 
 import simpleaudio as sa
@@ -18,6 +18,8 @@ class RandomPlayer:
         self.actor = get_one(['loli', 'boyish', 'low'])
         self.serif = get_one(['serif_enable', 'serif_disable'])
         self.finish = get_one(['wet', 'dry'])
+        self.first = get_one(['first_enable', 'first_disable'])
+        self.repeat = vals['repeat']  # type: ignore
         self.dir = self.__set_dir()
         self.thread = Process(target=self.__play)
         self.play_obj: Optional[sa.shiny.PlayObject] = None
@@ -35,17 +37,22 @@ class RandomPlayer:
         self.thread.start()
 
     def __play(self) -> None:
-        first_track = path.join(
-            self.dir, 'ループ音声', '01.この音声からランダム再生を初めてください.wav')
-        self.play_track(first_track)
+        if self.serif == 'serif_enable':
+            loop_tracks = sorted(
+                glob(path.join(self.dir, 'ループ音声', '*.wav')))[1:-4]
+            serif_tracks = sorted(
+                glob(path.join(self.dir, 'ループ音声', '*.wav')))[-4:]
+            shuffle(serif_tracks)
+            for track in serif_tracks:
+                self.play_track(track)
+                for track in sample(loop_tracks, randint(1, 9)):
+                    self.play_track(track)
 
-        loop_tracks = (sorted(glob(path.join(self.dir, 'ループ音声', '*.wav')))[1:]
-                       if self.serif == 'serif_enable'
-                       else glob(path.join(self.dir, 'オノマトペオンリー', '*.wav')))
-        loop_tracks_len = len(loop_tracks)
-        while True:
-            rand_int = randint(0, loop_tracks_len-1)
-            self.play_track(loop_tracks[rand_int])
+        else:
+            loop_tracks = glob(path.join(self.dir, 'オノマトペオンリー', '*.wav'))
+            shuffle(loop_tracks)
+            for track in loop_tracks:
+                self.__play_times(track)
 
     def play_track(self, track_path: str) -> None:
         if path.isfile(track_path):
@@ -57,6 +64,16 @@ class RandomPlayer:
     def play_final(self) -> None:
         self.thread = Process(target=self.__play_final)
         self.thread.start()
+
+    def __play_times(self, track: str) -> None:
+        for _ in range(self.repeat):
+            self.play_track(track)
+
+    def __play_first(self) -> None:
+        if self.first == 'first_enable':
+            first_track = path.join(
+                self.dir, 'ループ音声', '01.この音声からランダム再生を初めてください.wav')
+            self.play_track(first_track)
 
     def __play_final(self) -> None:
         final_track = path.join(
