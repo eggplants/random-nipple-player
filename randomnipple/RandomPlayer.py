@@ -21,7 +21,7 @@ class RandomPlayer:
         self.first = get_one(['first_enable', 'first_disable'])
         self.repeat = vals['repeat']  # type: ignore
         self.dir = self.__set_dir()
-        self.thread = Process(target=self.__play)
+        self.thread = Process(target=self.__play_loop)
         self.play_obj: Optional[sa.shiny.PlayObject] = None
 
     def __set_dir(self) -> str:
@@ -36,6 +36,10 @@ class RandomPlayer:
     def play(self) -> None:
         self.thread.start()
 
+    def __play_loop(self) -> None:
+        while True:
+            self.__play()
+
     def __play(self) -> None:
         self.__play_first()
         if self.serif == 'serif_enable':
@@ -44,10 +48,11 @@ class RandomPlayer:
             serif_tracks = sorted(
                 glob(path.join(self.dir, 'ループ音声', '*.wav')))[-4:]
             shuffle(serif_tracks)
-            for track in serif_tracks:
-                self.play_track(track)
+            for s_track in serif_tracks:
                 for track in sample(loop_tracks, randint(1, 9)):
                     self.play_track(track)
+                else:
+                    self.play_track(s_track)
 
         else:
             loop_tracks = glob(path.join(self.dir, 'オノマトペオンリー', '*.wav'))

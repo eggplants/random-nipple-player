@@ -17,28 +17,28 @@ class MainWindow:
 
     def __layout(self):
         select_folder = [
-            [sg.InputText(key='dir'), sg.FolderBrowse(target='dir', key='browse')]]
+            [sg.InputText(key='dir', size=(50, 1)), sg.FolderBrowse(target='dir', key='browse')]]
 
-        ear = [[sg.Radio('右耳', key='left', group_id='ear', default=True),
-                sg.Radio('左耳', key='right', group_id='ear')]]
+        ear = [[sg.Radio('右耳　　', key='left', group_id='ear', default=True),
+                sg.Radio('左耳　', key='right', group_id='ear')]]
 
         actor = [[sg.Radio('ロリ', key='loli', group_id='actor', default=True),
                   sg.Radio('ボーイッシュ', key='boyish', group_id='actor'),
                   sg.Radio('低音お姉さん', key='low', group_id='actor')]]
 
-        first = [[sg.Radio('有り', key='first_enable', group_id='first', default=True),
-                  sg.Radio('無し', key='first_disable', group_id='first')]]
+        first = [[sg.Radio('有り　　', key='first_enable', group_id='first', default=True),
+                  sg.Radio('無し　', key='first_disable', group_id='first')]]
 
         serif = [[sg.Radio('有り', key='serif_enable', group_id='serif', default=True),
-                  sg.Radio('無し(オノマトペモード)', key='serif_disable', group_id='serif')]]
+                  sg.Radio('無し(オノマトペモード)　　　　 ', key='serif_disable', group_id='serif')]]
 
         finish = [[sg.Radio('ウェット', key='wet', group_id='finish', default=True),
                    sg.Radio('ドライ', key='dry', group_id='finish')]]
 
         spin = [[sg.Spin([_ for _ in range(1, 100)],
-                         initial_value=1, key='repeat', size=(5, 1)), sg.Text('回')]]
+                         initial_value=1, key='repeat', size=(5, 1)), sg.Text('回　　　　　　　　　　　　　　　　')]]
 
-        return [[sg.Frame('フォルダ選択', select_folder)],
+        return [[sg.Frame('フォルダ選択', [[sg.Column(select_folder, size=(460, 40))]])],
                 [sg.Frame('方向', ear), sg.Frame('ボイス', actor)],
                 [sg.Frame('挨拶', first), sg.Frame('ランダムセリフ', serif)],
                 [sg.Frame('フィニッシュ', finish),
