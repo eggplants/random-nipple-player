@@ -28,7 +28,7 @@ class MainWindow:
                   sg.Radio('無し', key='serif_disable', group_id='serif')]]
 
         first = [[sg.Radio('有り', key='first_enable', group_id='first', default=True),
-                  sg.Radio('無し', key='first_disable', group_id='first')]]
+                  sg.Radio('無し(オノマトペモード)', key='first_disable', group_id='first')]]
 
         finish = [[sg.Radio('ウェット', key='wet', group_id='finish', default=True),
                    sg.Radio('ドライ', key='dry', group_id='finish')]]
@@ -41,7 +41,7 @@ class MainWindow:
                 [sg.Frame('方向', ear), sg.Frame('挨拶', first),
                  sg.Frame('ランダムセリフ', serif)],
                 [sg.Frame('フィニッシュ', finish),
-                 sg.Frame('同一トラックリピート回数(ランダムセリフなし時)', spin)],
+                 sg.Frame('同一トラックリピート回数(ランダムセリフ無し時)', spin)],
                 [sg.Button('Play!', key='play', button_color='green'),
                  sg.Button('Close', key='close', button_color='red')]]
 
