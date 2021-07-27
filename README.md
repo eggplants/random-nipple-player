@@ -17,7 +17,7 @@
 
 ```bash
 pip install random-nipple-player
-rnp # 起動
+rnp # 実行すると画面が起動する
 ```
 
 ## Screenshot
