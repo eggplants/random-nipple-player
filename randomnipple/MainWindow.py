@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 
+from randomnipple import __version__
 from randomnipple.NippleOptionDict import NippleOptionDict
 from randomnipple.RandomPlayer import RandomPlayer
 from randomnipple.VoiceDirectoryChecker import VoiceDirectoryChecker
@@ -11,7 +12,7 @@ class MainWindow:
     def __init__(self) -> None:
         self.layout = self.__layout()
 
-        self.window = sg.Window('Random Nipple Player',
+        self.window = sg.Window('Random Nipple Player v' + __version__,
                                 self.layout, keep_on_top=True)
 
     def __layout(self):
@@ -60,7 +61,7 @@ class MainWindow:
     def __do(self) -> bool:
         vals: NippleOptionDict
         evt, vals = self.window.read()
-        print(vals)  # debug
+        # print(vals)  # debug
         if evt == 'play':
             self.__toggle_button(True)
             if not VoiceDirectoryChecker.check(vals['dir']):
