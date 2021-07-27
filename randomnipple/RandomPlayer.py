@@ -49,7 +49,7 @@ class RandomPlayer:
                 glob(path.join(self.dir, 'ループ音声', '*.wav')))[-4:]
             shuffle(serif_tracks)
             for s_track in serif_tracks:
-                for track in sample(loop_tracks, randint(1, 9)):
+                for track in sample(loop_tracks, randint(1, 8)):
                     self.play_track(track)
                 else:
                     self.play_track(s_track)
