@@ -24,7 +24,7 @@ jobs:
           python -m pip install -r requirements.txt
 
       - name: build
-        run: pyinstaller -F randomnipple/random-nipple-player.py -i img/icon.ico --version-file file_version_info.txt
+        run: pyinstaller -F randomnipple/main.py -i img/icon.ico --version-file file_version_info.txt
 
       - name: upload
         uses: actions/upload-artifact@v1
@@ -49,7 +49,7 @@ jobs:
           python -m pip install -r requirements.txt
 
       - name: build
-        run: pyinstaller -F randomnipple/random-nipple-player.py -i img/icon.ico
+        run: pyinstaller -F randomnipple/main.py -i img/icon.ico
 
       - name: upload
         uses: actions/upload-artifact@v1
@@ -75,7 +75,7 @@ jobs:
           python -m pip install -r requirements.txt
 
       - name: build
-        run: pyinstaller -F randomnipple/random-nipple-player.py -i img/icon.ico
+        run: pyinstaller -F randomnipple/main.py -i img/icon.ico
 
       - name: upload
         uses: actions/upload-artifact@v1

@@ -6,7 +6,7 @@ from typing import Optional
 
 import simpleaudio as sa
 
-from NippleOptionDict import NippleOptionDict
+from randomnipple.NippleOptionDict import NippleOptionDict
 
 
 class RandomPlayer:

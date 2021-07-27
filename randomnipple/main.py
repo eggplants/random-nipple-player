@@ -2,9 +2,9 @@
 
 import PySimpleGUI as sg
 
-from NippleOptionDict import NippleOptionDict
-from RandomPlayer import RandomPlayer
-from VoiceDirectoryChecker import VoiceDirectoryChecker
+from randomnipple.NippleOptionDict import NippleOptionDict
+from randomnipple.RandomPlayer import RandomPlayer
+from randomnipple.VoiceDirectoryChecker import VoiceDirectoryChecker
 
 sg.theme('DarkAmber')
 
