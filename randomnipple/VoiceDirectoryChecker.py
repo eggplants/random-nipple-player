@@ -11,7 +11,7 @@ class VoiceDirectoryChecker:
         if not path.isdir(dir_):
             return False
         else:
-            f = [len(glob('**/*.wav', recursive=True)) == 138]
+            f = [len(glob(path.join(dir_, '**/*.wav'), recursive=True)) == 138]
             for i in (dir_, dir_ + '/【左耳】2021.0612',):
                 f1 = path.isdir(i)
                 f2 = path.isdir(i+'/ボーイッシュ')
