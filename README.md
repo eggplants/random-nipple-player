@@ -22,6 +22,7 @@
 ### PyPI から起動
 
 ```bash
+sudo apt install libasound2-dev # alsa/asoundlib.hをsimpleaudioで使う
 pip install random-nipple-player
 rnp # 実行すると画面が起動する
 ```
