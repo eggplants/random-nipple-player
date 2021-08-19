@@ -8,14 +8,16 @@ class VoiceDirectoryChecker:
 
     @staticmethod
     def check(dir_: str) -> bool:
+        def count_wavs(dir_: str) -> int:
+            return len(glob(path.join(dir_, '**/*.wav'), recursive=True))
         if not path.isdir(dir_):
             return False
         else:
-            f = [len(glob(path.join(dir_, '**/*.wav'), recursive=True)) == 138]
-            for i in (dir_, dir_ + '/【左耳】2021.0612',):
-                f1 = path.isdir(i)
-                f2 = path.isdir(i+'/ボーイッシュ')
-                f3 = path.isdir(i+'/ロリ')
-                f4 = path.isdir(i+'/低音お姉さん')
-                f.extend((f1, f2, f3, f4,))
-            return all(f)
+            f = [
+                path.isdir(i) and \
+                path.isdir(i+'/ボーイッシュ') and \
+                path.isdir(i+'/ロリ') and \
+                path.isdir(i+'/低音お姉さん')
+                for i in (dir_, dir_ + '/【左耳】2021.0612',)]
+            return all(f) and count_wavs(dir_) == 138
+    
