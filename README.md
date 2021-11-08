@@ -15,14 +15,14 @@
 
 - 下記の方法で起動した画面で作品フォルダを指定
 
-### 実行ファイルから起動
+### ダウンロードした実行ファイルから起動
 
 [Releases](https://github.com/eggplants/random-nipple-player/releases)から対応する OS(Windows, Macos, Linux)のファイルをダウンロード, 解凍し実行
 
-### PyPI から起動
+### pipからインストールして起動
 
 ```bash
-sudo apt install libasound2-dev # alsa/asoundlib.hをsimpleaudioで使う
+# 必要: libasound2-dev, tk-inter >= 8.6
 pip install random-nipple-player
 rnp # 実行すると画面が起動する
 ```
