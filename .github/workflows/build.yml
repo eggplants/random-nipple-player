@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  PYTHON_VERSION: 3.9
+  PYTHON_VERSION: 3.9.7
 
 jobs:
   windows-build:
@@ -39,6 +39,9 @@ jobs:
     steps:
       - name: Checkout commit
         uses: actions/checkout@master
+
+      - name: Install python-tk
+        run: brew install python-tk@3.9
 
       - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@master
