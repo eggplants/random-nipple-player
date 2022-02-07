@@ -2,7 +2,9 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/random-nipple-player)](https://pypi.org/project/random-nipple-player) [![GitHub release](https://img.shields.io/github/v/release/eggplants/random-nipple-player)](https://github.com/eggplants/random-nipple-player/releases)
 
-音声作品「[乳首オナ指示でカリカリタイム](https://www.dlsite.com/maniax/work/=/product_id/RJ323807.html)」(RJ323807)用のプレイヤー
+- 音声作品「[乳首オナ指示でカリカリタイム](https://www.dlsite.com/maniax/work/=/product_id/RJ323807.html)」(RJ323807)用のプレイヤー
+- Windows, Linuxで動作確認
+- Macは音声が出ない場合がある
 
 ![scr1](img/scr1.png)
 
