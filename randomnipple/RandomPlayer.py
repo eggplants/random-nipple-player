@@ -1,8 +1,9 @@
+from __future__ import annotations
+
 from glob import glob
 from multiprocessing import Process
 from os import path
 from random import randint, sample, shuffle
-from typing import List, Optional
 
 import simpleaudio as sa  # type: ignore[import]
 
@@ -11,7 +12,7 @@ from randomnipple.NippleOptionDict import NippleOptionDict
 
 class RandomPlayer:
     def __init__(self, vals: NippleOptionDict) -> None:
-        def get_one(options: List[str]) -> str:
+        def get_one(options: list[str]) -> str:
             return [i for i in options if i in self.vals][0]
 
         self.vals = vals
@@ -23,7 +24,7 @@ class RandomPlayer:
         self.repeat = vals["repeat"]
         self.dir = self.__set_dir()
         self.thread = Process(target=self.__play_loop)
-        self.play_obj: Optional[sa.shiny.PlayObject] = None
+        self.play_obj: sa.shiny.PlayObject | None = None
 
     def __set_dir(self) -> str:
         base = self.vals["dir"]

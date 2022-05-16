@@ -1,4 +1,6 @@
-from typing import Any, List
+from __future__ import annotations
+
+from typing import Any
 
 import PySimpleGUI as sg  # type: ignore[import]
 
@@ -18,7 +20,7 @@ class MainWindow:
             "Random Nipple Player v" + __version__, self.layout, keep_on_top=True
         )
 
-    def __layout(self) -> List[List[Any]]:
+    def __layout(self) -> list[list[Any]]:
         select_folder = [
             [
                 sg.InputText(key="dir", size=(50, 1)),
